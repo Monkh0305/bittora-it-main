@@ -1,0 +1,63 @@
+<section>
+  <h1>Products</h1>
+  <p class="muted">Browse available items with images and details.</p>
+
+  <div class="store-grid">
+    <% if (!products.length) { %>
+      <article class="card">
+        <p>No products available.</p>
+      </article>
+    <% } %>
+
+    <% products.forEach(product => { %>
+      <article class="store-card">
+        <div class="store-media">
+          <% if (product.image_url) { %>
+            <img src="<%= product.image_url %>" alt="<%= product.product_name %>" class="store-image" />
+          <% } else { %>
+            <div class="store-image-placeholder">No Image</div>
+          <% } %>
+        </div>
+        <div class="store-content">
+          <h2><%= product.product_name %></h2>
+          <p class="muted"><%= product.Category ? product.Category.category_name : '-' %></p>
+          <p><strong>Price:</strong> $<%= Number(product.price).toFixed(2) %></p>
+          <p><strong>Stock:</strong> <%= product.stock %></p>
+          <p><strong>Description:</strong> <%= product.description || '-' %></p>
+          <div class="actions">
+            <form action="/orders/quick" method="POST" class="inline-form">
+              <input type="hidden" name="product_id" value="<%= product.product_id %>" />
+              <div class="qty-control" data-stock="<%= product.stock %>">
+                <button type="button" class="btn btn-secondary qty-btn js-qty-dec">-</button>
+                <input type="number" name="quantity" value="1" min="1" max="<%= product.stock %>" class="qty-input js-qty-input" />
+                <button type="button" class="btn btn-secondary qty-btn js-qty-inc">+</button>
+              </div>
+              <button type="submit" class="btn btn-create">Order</button>
+            </form>
+          </div>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<script>
+  ;(function () {
+    document.addEventListener('click', function (event) {
+      const plusBtn = event.target.closest('.js-qty-inc')
+      const minusBtn = event.target.closest('.js-qty-dec')
+      if (!plusBtn && !minusBtn) return
+
+      const wrapper = event.target.closest('.qty-control')
+      if (!wrapper) return
+
+      const input = wrapper.querySelector('.js-qty-input')
+      if (!input) return
+
+      const stock = Number(wrapper.getAttribute('data-stock') || 1)
+      const current = Math.max(1, Number(input.value || 1))
+      const next = plusBtn ? current + 1 : current - 1
+      input.value = String(Math.min(stock, Math.max(1, next)))
+    })
+  })()
+</script>

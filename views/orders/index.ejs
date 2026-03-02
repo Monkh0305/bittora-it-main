@@ -1,0 +1,105 @@
+<div class="page-title-row">
+  <h1>Orders</h1>
+  <div class="actions">
+    <% if (isAdmin) { %>
+      <a href="/orders/new" class="btn btn-create">Add Order</a>
+      <form action="/orders/delete-old" method="POST" class="inline-form actions">
+        <input type="number" name="days" min="1" value="30" style="width: 100px;" />
+        <button type="submit" class="btn btn-delete" data-confirm-delete="Delete old orders from database?">Delete Old Orders</button>
+      </form>
+    <% } %>
+  </div>
+</div>
+
+<%
+  const safeGroupedOrders = (typeof groupedOrders !== 'undefined' && Array.isArray(groupedOrders))
+    ? groupedOrders
+    : []
+%>
+
+<% if (!safeGroupedOrders.length) { %>
+  <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><td>No orders found.</td></tr>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<% safeGroupedOrders.forEach(group => { %>
+  <div class="card js-group-card" data-user-id="<%= group.user_id %>" style="margin-bottom: 16px;">
+    <h2 style="margin-bottom: 8px;">User: <%= group.username %></h2>
+    <p class="muted" style="margin-top: 0;">
+      Total Orders:
+      <span class="js-total-orders"><%= group.total_orders %></span> |
+      Total Amount:
+      $<span class="js-total-amount"><%= Number(group.total_revenue).toFixed(2) %></span>
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% group.orders.forEach(order => { %>
+            <tr>
+              <td><%= order.order_id %></td>
+              <td><%= new Date(order.order_date).toISOString().slice(0, 19).replace('T', ' ') %></td>
+              <td><%= order.status %></td>
+              <td>$<%= Number(order.total_price).toFixed(2) %></td>
+              <td class="actions">
+                <a href="/orders/<%= order.order_id %>" class="btn btn-info">View</a>
+                <% if (order.status !== 'cancelled') { %>
+                  <form action="/orders/<%= order.order_id %>/cancel" method="POST" class="inline-form">
+                    <button type="submit" class="btn btn-delete" data-confirm-delete="Cancel this order?">Cancel</button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% }) %>
+
+<script>
+  ;(function () {
+    const cards = Array.from(document.querySelectorAll('.js-group-card'))
+    if (!cards.length) return
+
+    async function refreshTotals() {
+      try {
+        const response = await fetch('/orders/realtime', { headers: { Accept: 'application/json' } })
+        if (!response.ok) return
+
+        const payload = await response.json()
+        const groups = Array.isArray(payload.grouped_orders) ? payload.grouped_orders : []
+        const byUserId = new Map(groups.map(group => [String(group.user_id), group]))
+
+        cards.forEach(card => {
+          const userId = card.getAttribute('data-user-id')
+          const group = byUserId.get(String(userId))
+          if (!group) return
+
+          const totalOrdersEl = card.querySelector('.js-total-orders')
+          const totalAmountEl = card.querySelector('.js-total-amount')
+          if (totalOrdersEl) totalOrdersEl.textContent = String(group.total_orders)
+          if (totalAmountEl) totalAmountEl.textContent = Number(group.total_revenue || 0).toFixed(2)
+        })
+      } catch (_) {
+        // Keep UI unchanged if realtime refresh fails.
+      }
+    }
+
+    window.setInterval(refreshTotals, 5000)
+  })()
+</script>

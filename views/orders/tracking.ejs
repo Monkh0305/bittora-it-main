@@ -1,0 +1,32 @@
+<div class="page-title-row">
+  <h1>Track Order Status</h1>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Order Date</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (!orders.length) { %>
+        <tr><td colspan="5">No orders to track.</td></tr>
+      <% } %>
+      <% orders.forEach(order => { %>
+        <tr>
+          <td>#<%= order.order_id %></td>
+          <td><%= new Date(order.order_date).toISOString().slice(0, 19).replace('T', ' ') %></td>
+          <td><%= order.status %></td>
+          <td>$<%= Number(order.total_price).toFixed(2) %></td>
+          <td><a href="/orders/<%= order.order_id %>" class="btn btn-info">View</a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+

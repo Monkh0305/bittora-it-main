@@ -1,0 +1,37 @@
+<div class="page-title-row no-print">
+  <h1>Products Report</h1>
+  <button type="button" class="btn btn-primary" data-print-report>Print</button>
+</div>
+
+<div class="print-sheet">
+  <h2>Bittora IT Store - Products Report</h2>
+  <p>Generated on: <%= new Date().toLocaleString() %></p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Product Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (!products.length) { %>
+          <tr><td colspan="5">No products available.</td></tr>
+        <% } %>
+        <% products.forEach(product => { %>
+          <tr>
+            <td><%= product.product_id %></td>
+            <td><%= product.product_name %></td>
+            <td><%= product.Category ? product.Category.category_name : '-' %></td>
+            <td>$<%= Number(product.price).toFixed(2) %></td>
+            <td><%= product.stock %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

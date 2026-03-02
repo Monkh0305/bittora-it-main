@@ -1,0 +1,29 @@
+<div class="page-title-row">
+  <h1>Best Selling Products</h1>
+  <a href="/reports" class="btn btn-cancel">Back to Reports</a>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Total Quantity Sold</th>
+        <th>Total Revenue</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (!bestSelling.length) { %>
+        <tr><td colspan="3">No sales data available.</td></tr>
+      <% } %>
+
+      <% bestSelling.forEach(item => { %>
+        <tr>
+          <td><%= item.product_name %></td>
+          <td><%= Number(item.get('total_quantity_sold')) %></td>
+          <td>$<%= Number(item.get('total_revenue')).toFixed(2) %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

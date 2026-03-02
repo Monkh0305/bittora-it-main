@@ -1,0 +1,31 @@
+<h1>Edit Order Item</h1>
+
+<form action="/order_items/<%= orderItem.order_item_id %>?_method=PUT" method="POST" class="form-grid">
+  <label for="order_id">Order</label>
+  <select id="order_id" name="order_id" required>
+    <% orders.forEach(order => { %>
+      <option value="<%= order.order_id %>" <%= String(orderItem.order_id) === String(order.order_id) ? 'selected' : '' %>>
+        #<%= order.order_id %>
+        <%= order.User ? `(${order.User.username})` : '' %>
+        - $<%= Number(order.total_price).toFixed(2) %>
+      </option>
+    <% }) %>
+  </select>
+
+  <label for="product_id">Product</label>
+  <select id="product_id" name="product_id" required>
+    <% products.forEach(product => { %>
+      <option value="<%= product.product_id %>" <%= String(orderItem.product_id) === String(product.product_id) ? 'selected' : '' %>>
+        <%= product.product_name %> ($<%= Number(product.price).toFixed(2) %>)
+      </option>
+    <% }) %>
+  </select>
+
+  <label for="quantity">Quantity</label>
+  <input id="quantity" type="number" min="1" name="quantity" value="<%= orderItem.quantity %>" required />
+
+  <div class="form-actions">
+    <a href="/order_items" class="btn btn-cancel">Cancel</a>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </div>
+</form>

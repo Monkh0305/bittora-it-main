@@ -1,0 +1,23 @@
+<h1>Edit User</h1>
+
+<form action="/users/<%= user.user_id %>?_method=PUT" method="POST" class="form-grid">
+  <label for="username">Username</label>
+  <input id="username" type="text" name="username" value="<%= user.username %>" required />
+
+  <label for="email">Email</label>
+  <input id="email" type="email" name="email" value="<%= user.email %>" required />
+
+  <label for="password">Password</label>
+  <input id="password" type="text" name="password" value="<%= user.password %>" required />
+
+  <label for="role">Role</label>
+  <select id="role" name="role" required>
+    <option value="customer" <%= user.role === 'customer' || user.role === 'user' ? 'selected' : '' %>>User</option>
+    <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+  </select>
+
+  <div class="form-actions">
+    <a href="/users" class="btn btn-cancel">Cancel</a>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </div>
+</form>

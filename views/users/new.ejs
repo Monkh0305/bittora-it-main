@@ -1,0 +1,23 @@
+<h1>Create User</h1>
+
+<form action="/users" method="POST" class="form-grid">
+  <label for="username">Username</label>
+  <input id="username" type="text" name="username" required />
+
+  <label for="email">Email</label>
+  <input id="email" type="email" name="email" required />
+
+  <label for="password">Password</label>
+  <input id="password" type="text" name="password" required />
+
+  <label for="role">Role</label>
+  <select id="role" name="role" required>
+    <option value="customer">User</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <div class="form-actions">
+    <a href="/users" class="btn btn-cancel">Cancel</a>
+    <button type="submit" class="btn btn-create">Save</button>
+  </div>
+</form>

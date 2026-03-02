@@ -1,0 +1,43 @@
+<div class="page-title-row">
+  <h1>Order Items</h1>
+  <a href="/order_items/new" class="btn btn-create">Add Order Item</a>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Order</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (!orderItems.length) { %>
+        <tr><td colspan="6">No order items found.</td></tr>
+      <% } %>
+      <% orderItems.forEach(item => { %>
+        <tr>
+          <td><%= item.order_item_id %></td>
+          <td>
+            #<%= item.order_id %>
+            <%= item.Order && item.Order.User ? `(${item.Order.User.username})` : '' %>
+          </td>
+          <td><%= item.Product ? item.Product.product_name : '-' %></td>
+          <td><%= item.quantity %></td>
+          <td>$<%= Number(item.subtotal).toFixed(2) %></td>
+          <td class="actions">
+            <a href="/order_items/<%= item.order_item_id %>" class="btn btn-info">View</a>
+            <a href="/order_items/<%= item.order_item_id %>/edit" class="btn btn-warning">Edit</a>
+            <form action="/order_items/<%= item.order_item_id %>?_method=DELETE" method="POST" class="inline-form">
+              <button type="submit" class="btn btn-delete" data-confirm-delete="Delete this order item?">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

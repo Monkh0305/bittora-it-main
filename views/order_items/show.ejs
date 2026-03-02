@@ -1,0 +1,16 @@
+<div class="page-title-row">
+  <h1>Order Item Detail</h1>
+  <a href="/order_items" class="btn btn-secondary">Back</a>
+</div>
+
+<div class="card">
+  <p><strong>ID:</strong> <%= orderItem.order_item_id %></p>
+  <p>
+    <strong>Order:</strong>
+    #<%= orderItem.order_id %>
+    <%= orderItem.Order && orderItem.Order.User ? `(${orderItem.Order.User.username})` : '' %>
+  </p>
+  <p><strong>Product:</strong> <%= orderItem.Product ? orderItem.Product.product_name : '-' %></p>
+  <p><strong>Quantity:</strong> <%= orderItem.quantity %></p>
+  <p><strong>Subtotal:</strong> $<%= Number(orderItem.subtotal).toFixed(2) %></p>
+</div>

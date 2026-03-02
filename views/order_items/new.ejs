@@ -1,0 +1,31 @@
+<h1>Create Order Item</h1>
+
+<form action="/order_items" method="POST" class="form-grid">
+  <label for="order_id">Order</label>
+  <select id="order_id" name="order_id" required>
+    <option value="">Select order</option>
+    <% orders.forEach(order => { %>
+      <option value="<%= order.order_id %>">
+        #<%= order.order_id %>
+        <%= order.User ? `(${order.User.username})` : '' %>
+        - $<%= Number(order.total_price).toFixed(2) %>
+      </option>
+    <% }) %>
+  </select>
+
+  <label for="product_id">Product</label>
+  <select id="product_id" name="product_id" required>
+    <option value="">Select product</option>
+    <% products.forEach(product => { %>
+      <option value="<%= product.product_id %>"><%= product.product_name %> ($<%= Number(product.price).toFixed(2) %>)</option>
+    <% }) %>
+  </select>
+
+  <label for="quantity">Quantity</label>
+  <input id="quantity" type="number" min="1" name="quantity" value="1" required />
+
+  <div class="form-actions">
+    <a href="/order_items" class="btn btn-cancel">Cancel</a>
+    <button type="submit" class="btn btn-create">Save</button>
+  </div>
+</form>

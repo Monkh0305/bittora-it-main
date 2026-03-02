@@ -1,0 +1,23 @@
+<section class="auth-wrap">
+  <div class="auth-card">
+    <h1>Login</h1>
+    <p class="muted">Sign in as admin or user.</p>
+
+    <form method="POST" action="/auth/login" class="form-grid">
+      <div>
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" required value="<%= formData.username || '' %>" />
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required />
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </form>
+  </div>
+</section>
+

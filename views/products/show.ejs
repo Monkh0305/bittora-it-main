@@ -1,0 +1,27 @@
+<div class="page-title-row">
+  <h1>Product Detail</h1>
+  <a href="/products" class="btn btn-secondary">Back</a>
+</div>
+
+<div class="card">
+  <div style="text-align:center; margin-bottom:20px;">
+    <% if (product.image_url) { %>
+      <img
+        src="<%= product.image_url %>"
+        alt="Product Image"
+        style="max-width:300px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.3);"
+      />
+    <% } else { %>
+      <img src="/images/no-image.png" width="250" alt="No Image" />
+    <% } %>
+  </div>
+
+  <div class="product-detail-info">
+    <p><strong>ID:</strong> <%= product.product_id %></p>
+    <p><strong>Name:</strong> <%= product.product_name %></p>
+    <p><strong>Category:</strong> <%= product.Category ? product.Category.category_name : '-' %></p>
+    <p><strong>Price:</strong> $<%= Number(product.price).toFixed(2) %></p>
+    <p><strong>Stock:</strong> <%= product.stock %></p>
+    <p><strong>Description:</strong> <%= product.description || '-' %></p>
+  </div>
+</div>

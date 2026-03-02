@@ -1,0 +1,30 @@
+<header class="navbar">
+  <div class="brand">Bittora IT Store</div>
+  <nav class="nav-links">
+    <% if (currentUser) { %>
+      <% if (isAdmin) { %>
+        <a href="/">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/orders">Orders</a>
+        <a href="/users">Users</a>
+        <a href="/order_items">Order Items</a>
+        <a href="/reports">Reports</a>
+        <a href="/categories">Categories</a>
+      <% } else { %>
+        <a href="/">Home</a>
+        <a href="/orders">Orders</a>
+      <% } %>
+    <% } else { %>
+      <a href="/auth/login">Login</a>
+    <% } %>
+  </nav>
+  <div class="nav-right">
+    <% if (currentUser) { %>
+      <span class="user-badge"><%= currentUser.username %> (<%= isAdmin ? 'admin' : 'user' %>)</span>
+      <form method="POST" action="/auth/logout" class="inline-form">
+        <button type="submit" class="btn btn-cancel">Logout</button>
+      </form>
+    <% } %>
+    <button type="button" id="themeToggle" class="btn btn-secondary toggle-theme no-print">Dark Mode</button>
+  </div>
+</header>

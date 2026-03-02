@@ -1,0 +1,50 @@
+<section>
+  <h1>Dashboard</h1>
+  <p class="muted">Bittora IT Store inventory overview.</p>
+
+  <div class="dashboard-grid">
+    <article class="stat-card">
+      <h2>Total Products</h2>
+      <p><%= stats.totalProducts %></p>
+    </article>
+
+    <article class="stat-card">
+      <h2>Total Stock</h2>
+      <p><%= stats.totalStock %></p>
+    </article>
+
+    <article class="stat-card">
+      <h2>Total Categories</h2>
+      <p><%= stats.totalCategories %></p>
+    </article>
+  </div>
+
+  <h2>Latest 5 Added Products</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (!latestProducts.length) { %>
+          <tr><td colspan="5">No products available.</td></tr>
+        <% } %>
+        <% latestProducts.forEach(product => { %>
+          <tr>
+            <td><%= product.product_id %></td>
+            <td><%= product.product_name %></td>
+            <td><%= product.Category ? product.Category.category_name : '-' %></td>
+            <td>$<%= Number(product.price).toFixed(2) %></td>
+            <td><%= product.stock %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>

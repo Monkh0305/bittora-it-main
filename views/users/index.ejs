@@ -1,0 +1,38 @@
+<div class="page-title-row">
+  <h1>Users</h1>
+  <a href="/users/new" class="btn btn-create">Add User</a>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (!users.length) { %>
+        <tr><td colspan="5">No users found.</td></tr>
+      <% } %>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.user_id %></td>
+          <td><%= user.username %></td>
+          <td><%= user.email %></td>
+          <td><%= user.role === 'admin' ? 'admin' : 'user' %></td>
+          <td class="actions">
+            <a href="/users/<%= user.user_id %>" class="btn btn-info">View</a>
+            <a href="/users/<%= user.user_id %>/edit" class="btn btn-warning">Edit</a>
+            <form action="/users/<%= user.user_id %>?_method=DELETE" method="POST" class="inline-form">
+              <button type="submit" class="btn btn-delete" data-confirm-delete="Delete this user?">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

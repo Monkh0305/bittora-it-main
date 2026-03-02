@@ -1,0 +1,134 @@
+<div class="page-title-row">
+  <h1>Sales Report</h1>
+  <a href="/reports" class="btn btn-cancel">Back to Reports</a>
+</div>
+
+<%
+  const safeFilters = typeof filters !== 'undefined' ? filters : {}
+  const safeOrders = (typeof orders !== 'undefined' && Array.isArray(orders)) ? orders : []
+  const safeOrderItemsByOrderId = (typeof orderItemsByOrderId !== 'undefined' && orderItemsByOrderId) ? orderItemsByOrderId : {}
+  const safeProductSalesRows = (typeof productSalesRows !== 'undefined' && Array.isArray(productSalesRows))
+    ? productSalesRows
+    : ((typeof salesRows !== 'undefined' && Array.isArray(salesRows)) ? salesRows : [])
+  const safeTotalProductQuantity = typeof totalProductQuantity !== 'undefined'
+    ? totalProductQuantity
+    : safeProductSalesRows.reduce((sum, row) => sum + Number(row.get('total_quantity') || row.get('total_orders') || 0), 0)
+  const safeTotalProductRevenue = typeof totalProductRevenue !== 'undefined'
+    ? totalProductRevenue
+    : safeProductSalesRows.reduce((sum, row) => sum + Number(row.get('total_revenue') || 0), 0)
+  const safeTotalOrders = typeof totalOrders !== 'undefined' ? totalOrders : safeOrders.length
+  const safeTotalRevenue = typeof totalRevenue !== 'undefined'
+    ? totalRevenue
+    : safeOrders.reduce((sum, order) => sum + Number(order.total_price || 0), 0)
+  const safeOrderDetailsRevenue = safeOrders.reduce((sum, order) => sum + Number(order.total_price || 0), 0)
+  const formatDbDateTime = (value) => {
+    if (!value) return '-'
+    const date = new Date(value)
+    if (Number.isNaN(date.getTime())) return String(value)
+    const pad = (n) => String(n).padStart(2, '0')
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`
+  }
+%>
+
+<form method="GET" action="/reports/sales" class="filter-row">
+  <div>
+    <label for="date">Date</label>
+    <input id="date" type="date" name="date" value="<%= safeFilters.date || '' %>" />
+  </div>
+  <div>
+    <label for="month">Month</label>
+    <input id="month" type="month" name="month" value="<%= safeFilters.month || '' %>" />
+  </div>
+  <button type="submit" class="btn btn-primary">Apply</button>
+  <a href="/reports/sales" class="btn btn-cancel">Reset</a>
+</form>
+
+<div class="dashboard-grid">
+  <article class="stat-card">
+    <h2>Total Orders</h2>
+    <p><%= safeTotalOrders %></p>
+  </article>
+  <article class="stat-card">
+    <h2>Total Revenue</h2>
+    <p>$<%= Number(safeTotalRevenue).toFixed(2) %></p>
+  </article>
+</div>
+
+<h2>Summary by Product (Monthly)</h2>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Total Quantity Sold</th>
+        <th>Total Revenue</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (!safeProductSalesRows.length) { %>
+        <tr><td colspan="3">No product sales summary available for selected filter.</td></tr>
+      <% } %>
+      <% safeProductSalesRows.forEach(row => { %>
+        <tr>
+          <td><%= row.get('product_name') || formatDbDateTime(row.get('order_date')) %></td>
+          <td><%= Number(row.get('total_quantity') || row.get('total_orders') || 0) %></td>
+          <td>$<%= Number(row.get('total_revenue')).toFixed(2) %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>Total</th>
+        <th><%= safeTotalProductQuantity %></th>
+        <th>$<%= Number(safeTotalProductRevenue).toFixed(2) %></th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<h2>Order Details</h2>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>User</th>
+        <th>Order Date</th>
+        <th>Items (Qty)</th>
+        <th>Status</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (!safeOrders.length) { %>
+        <tr><td colspan="6">No orders for selected filter.</td></tr>
+      <% } %>
+      <% safeOrders.forEach(order => { %>
+        <tr>
+          <td>#<%= order.order_id %></td>
+          <td><%= order.User ? order.User.username : '-' %></td>
+          <td><%= formatDbDateTime(order.order_date) %></td>
+          <td>
+            <%
+              const items = Array.isArray(safeOrderItemsByOrderId[order.order_id]) ? safeOrderItemsByOrderId[order.order_id] : []
+            %>
+            <% if (!items.length) { %>
+              -
+            <% } else { %>
+              <%= items.map(item => `${item.product_name} x${item.quantity}`).join(', ') %>
+            <% } %>
+          </td>
+          <td><%= order.status %></td>
+          <td>$<%= Number(order.total_price).toFixed(2) %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="4">Summary</th>
+        <th><%= safeOrders.length %> Orders</th>
+        <th>$<%= Number(safeOrderDetailsRevenue).toFixed(2) %></th>
+      </tr>
+    </tfoot>
+  </table>
+</div>

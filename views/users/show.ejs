@@ -1,0 +1,12 @@
+<div class="page-title-row">
+  <h1>User Detail</h1>
+  <a href="/users" class="btn btn-secondary">Back</a>
+</div>
+
+<div class="card">
+  <p><strong>ID:</strong> <%= user.user_id %></p>
+  <p><strong>Username:</strong> <%= user.username %></p>
+  <p><strong>Email:</strong> <%= user.email %></p>
+  <p><strong>Role:</strong> <%= user.role === 'admin' ? 'admin' : 'user' %></p>
+  <p><strong>Orders:</strong> <%= user.Orders ? user.Orders.length : 0 %></p>
+</div>
