@@ -42,22 +42,22 @@ async function seed() {
     ])
 
     const productSeeds = [
-      { product_name: 'ApexBook 14', price: 749, stock: 18, category: 0, image_url: '/images/products/laptop.jpg' },
-      { product_name: 'ApexBook Pro 16', price: 1299, stock: 10, category: 0, image_url: '/images/products/24.jpg' },
-      { product_name: 'Nimbus Phone X', price: 599, stock: 30, category: 1, image_url: '/images/products/nimbusphonex.svg' },
-      { product_name: 'Nimbus Phone Lite', price: 399, stock: 25, category: 1, image_url: '/images/products/nimbusphonelite.svg' },
-      { product_name: 'UltraView 27', price: 229, stock: 15, category: 2, image_url: '/images/products/ultraview27.svg' },
-      { product_name: 'UltraView 32', price: 319, stock: 12, category: 2, image_url: '/images/products/ultraview32.svg' },
-      { product_name: 'MechKeys K87', price: 89, stock: 40, category: 3, image_url: '/images/products/mechkeysk87.svg' },
-      { product_name: 'PulseMouse M5', price: 49, stock: 55, category: 3, image_url: '/images/products/pulsemousem5.svg' },
-      { product_name: 'StormRouter AX5400', price: 179, stock: 20, category: 4, image_url: '/images/products/stormrouterax5400.svg' },
-      { product_name: 'StormMesh Duo', price: 249, stock: 14, category: 4, image_url: '/images/products/stormmeshduo.svg' },
-      { product_name: 'DeskCam 4K', price: 139, stock: 22, category: 3, image_url: '/images/products/deskcam4k.svg' },
-      { product_name: 'PowerDock 11-in-1', price: 109, stock: 28, category: 3, image_url: '/images/products/powerdock11in1.svg' },
-      { product_name: 'FiberLink Switch 16', price: 159, stock: 16, category: 4, image_url: '/images/products/fiberlinkswitch16.svg' },
-      { product_name: 'QuantumPad Pro', price: 69, stock: 38, category: 3, image_url: '/images/products/pad.jpg' },
-      { product_name: 'OrbitCam FHD', price: 79, stock: 31, category: 3, image_url: '/images/products/web.jpg' },
-      { product_name: 'ViewMax 24', price: 189, stock: 18, category: 2, image_url: '/images/products/viewmax24.svg' }
+      { product_name: 'Notebook HP OmniBook X Flip 14-fk0054AU', price: 749, stock: 18, category: 0, image_url: '/images/products/24.jpg' },
+      { product_name: 'Apple MacBook Air 13 M4/16GB/512 - Sky Blue', price: 1299, stock: 10, category: 0, image_url: '/images/products/A0167646OK_BIG_1.jpg' },
+      { product_name: 'Nimbus - iPhone X / XS Case', price: 599, stock: 30, category: 1, image_url: '/images/products/AR-02-DAC.webp' },
+      { product_name: 'Apple iPhone 17 Pro Max 256GB Cosmic Orange', price: 399, stock: 25, category: 1, image_url: '/images/products/iPhone_17_Pro_Max_7-square_medium.jpg' },
+      { product_name: 'จอมอนิเตอร์ SAMSUNG Odyssey G50F LS32FG502EEXXT Gaming Monitor (IPS 2K 180Hz)', price: 229, stock: 15, category: 2, image_url: '/images/products/samsung-monitor-odyssey-g50f-ls32fg502eexxt-ips-2k-180hz-g-sync-amd-freesync-8806097820079-1-square_medium.jpg' },
+      { product_name: 'จอมอนิเตอร์ SAMSUNG Odyssey G53F LS27FG530EEXXT Gaming Monitor (IPS 2K 200Hz)', price: 319, stock: 12, category: 2, image_url: '/images/products/samsung-monitor-odyssey-g53f-ls27fg530eexxt-ips-2k-200hz-8806097738879-1-square_medium.jpg' },
+      { product_name: 'แว่นวีอาร์ Sony PlayStation VR2', price: 89, stock: 40, category: 3, image_url: '/images/products/Sony-PlayStation-VR2-6-square_medium.jpg' },
+      { product_name: 'จอยคอนโทรลเลอร์ Sony DualSense Gray Camouflage', price: 49, stock: 55, category: 3, image_url: '/images/products/Sony-DualSense-Wireless-Controller-Grey-Camouflage-1-square_medium.jpg' },
+      { product_name: 'เราเตอร์ Asus Network TUF-AX4200 Dual Band WiFi 6 Gaming Router', price: 179, stock: 20, category: 4, image_url: '/images/products/Asus-Network-TUF-AX4200-Dual-Band-WiFi-6-Gaming-Router-1-square_medium.jpg' },
+      { product_name: 'เราเตอร์ TP-Link Network TL-WA1201 AC1200 Access Point', price: 249, stock: 14, category: 4, image_url: '/images/products/TP-Link-Access-Point-TL-WA1201-AC1200-1-square_medium.jpg' },
+      { product_name: 'หูฟังเกมมิ่ง HyperX Gaming Headset Cloud Alpha Wireless', price: 139, stock: 22, category: 3, image_url: '/images/products/Hyper-X-Gaming-Headset-Cloud-Alpha-Wireless-02-square_medium.jpg' },
+      { product_name: 'จอยพวงมาลัย Logitech Gaming G923 Racing Wheel', price: 109, stock: 28, category: 3, image_url: '/images/products/Logitech-Gaming-G923-Racing-Wheel-1.-square_medium.jpg' },
+      { product_name: 'สวิตช์ฮับ TP-Link Network TL-SG108 8-Port Gigabit Switch', price: 159, stock: 16, category: 4, image_url: '/images/products/TP-Link-TL-SG108-8-Port-101001000Mbps-Desktop-Switch-2-square_medium.jpg' },
+      { product_name: 'คีย์บอร์ดเกมมิ่ง SteelSeries Apex Pro Mini Omnipoint Key US Magnetic Wrist Rest', price: 69, stock: 38, category: 3, image_url: '/images/products/steelseries-gaming-keyboard-apex-pro-mini-omnipoint-key-us-magnetic-wrist-rest-gen-3-square_medium.jpg '},
+      { product_name: 'คีย์บอร์ดเกมมิ่ง Ajazz Gaming AK820MaxPlus Gasket Tri-Mod RGB Hardie - Avo Switch', price: 79, stock: 31, category: 3, image_url: '/images/products/ajazz-gaming-keyboard-ak820maxplus-hardie-gasket-tri-mod-rgb-avo-switch-2-square_medium.jpg' },
+      { product_name: 'จอมอนิเตอร์ SAMSUNG Odyssey G9 LS49FG912EEXXT Gaming Monitor (VA Curved 144Hz)', price: 189, stock: 18, category: 2, image_url: '/images/products/samsung-monitor-odyssey-ls49fg912eexxt-va-curved-dqhd-144hz-1ms-8806095976426-1-square_medium.jpg' }
     ]
 
     const products = await db.Product.bulkCreate(
